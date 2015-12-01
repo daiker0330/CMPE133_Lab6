@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Lab6;
 
 /**
  *
  * @author yunfan
  */
-public class Teacher extends AnyParty{
-        public static String getName(){
-        return "tch";
+public class Teacher extends AnyParty {
+
+    public String getUserName() {
+        return super.getUserName();
     }
-    public static String getPsd(){
-        return "123";
+
+    public String getPsd() {
+        return super.getPassword();
     }
 }

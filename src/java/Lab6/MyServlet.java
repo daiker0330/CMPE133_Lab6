@@ -74,7 +74,7 @@ public class MyServlet extends HttpServlet {
         }
     }
     
-    private static void addDoc(IndexWriter w, String Class, String number, String time) throws IOException 
+    private static void addDoc(IndexWriter w, String Class, String number, String time, String department) throws IOException 
 	{
 		  Document doc = new Document();
 		  // A text field will be tokenized
@@ -82,6 +82,7 @@ public class MyServlet extends HttpServlet {
 		  // We use a string field for isbn because we don\'t want it tokenized
 		  doc.add(new StringField("Number", number, Field.Store.YES));
                   doc.add(new StringField("Time", time, Field.Store.YES));
+                  doc.add(new StringField("Department", department, Field.Store.YES));
 		  w.addDocument(doc);
 	}
 
@@ -98,12 +99,12 @@ public class MyServlet extends HttpServlet {
             IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
             IndexWriter w = new IndexWriter(index, config);
-            addDoc(w, " Software Engineering 2", "133", "Mon.");
-            addDoc(w, " Software Engineering 1", "CMPE 131:", "Mon.");
-            addDoc(w, " Object Oriented Design", "CS 151:", "Mon.");
-            addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.");
-            addDoc(w, " System Security with Java", "CS 166:", "Mon.");
-            addDoc(w, "Lucene demo by teja", "23k43413", "Mon.");
+            addDoc(w, " Software Engineering 2", "CMPE 133", "Mon.","Computer Engineering");
+            addDoc(w, " Software Engineering 1", "CMPE 131", "Mon.", "Computer Engineering");
+            addDoc(w, " Object Oriented Design", "CS 151:", "Mon.", "Computer Science");
+            addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.", "Computer Science");
+            addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
+            addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
             w.close();
 
             //	Text to search
@@ -126,7 +127,7 @@ public class MyServlet extends HttpServlet {
             for (int i = 0; i < hits.length; ++i) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
-                Course course = new Course(d.get("Number"), d.get("Classes"), d.get("Time"));
+                Course course = new Course(d.get("Number"), d.get("Classes"), d.get("Time"),d.get("Department"));
                 //out.println((i + 1) + ". " +  d.get("Number")+ d.get("Classes") );
                 list.add(course);
             }
@@ -151,7 +152,7 @@ public class MyServlet extends HttpServlet {
         String name = request.getParameter("name");
         String psd = request.getParameter("psd");
 
-        if(Student.getName().equals(name) && Student.getPsd().equals(psd)){
+        if(name.equals("std") && psd.equals("123")){
             try{
                 RequestDispatcher de=request.getRequestDispatcher("/search.html");  
                 de.forward(request, response);
@@ -160,7 +161,7 @@ public class MyServlet extends HttpServlet {
                 System.out.println(e.getMessage());
             }
         }
-        else if(Teacher.getName().equals(name) && Teacher.getPsd().equals(psd)){
+        else if(name.equals("tch") && psd.equals("123")){
             String msg="You are a teacher";  
             String title="Teacher";  
             gotoMsg(out, request, response,title,msg);
@@ -184,7 +185,7 @@ public class MyServlet extends HttpServlet {
     }
     
     private void gotoEnroll(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
-        String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("id");  
+        String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");  
         msg+= "\n";
         msg+=request.getParameter("description");
         String title="Enroll Success";  

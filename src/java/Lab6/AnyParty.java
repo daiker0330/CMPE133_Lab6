@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author yunfan
  */
+package Lab6;
+
 public class AnyParty {
-    String name;
-    String id;
+
+    private String UserName;
+    private String name;
+    private String id;
+    private String units;
+    private String password;
 
     public String getName() {
         return name;
@@ -27,5 +32,17 @@ public class AnyParty {
     public void setId(String id) {
         this.id = id;
     }
-    
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
 }
