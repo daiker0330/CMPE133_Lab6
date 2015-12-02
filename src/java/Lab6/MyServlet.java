@@ -78,6 +78,7 @@ public class MyServlet extends HttpServlet {
             w.close();
             log = new searchHistory();
             Student std = new Student();
+
             std.setUserName("std");
             std.setPassword("123");
             stds.add(std);

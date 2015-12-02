@@ -14,6 +14,15 @@ public class Student extends AnyParty {
 	private int StudentUnits;
 	private Enrolling enroll;
 	
+<<<<<<< HEAD
+=======
+
+
+	
+    public String getUserName(){
+        return super.getUserName();
+    }
+>>>>>>> origin/master
     public  String getPsd(){
         return super.getPassword();
     }
