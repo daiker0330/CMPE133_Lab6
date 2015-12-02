@@ -22,16 +22,14 @@ public Schedule getSchedule(){
     return schedule;
 }
 
-<<<<<<< HEAD
 
-=======
+
     public Student(int StudentUnits, Enrolling enroll){
  
         this.StudentUnits = StudentUnits;
         this.enroll = enroll;
     }
 	
->>>>>>> origin/master
     public String getUserName(){
         return super.getUserName();
     }
