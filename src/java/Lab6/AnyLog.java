@@ -10,11 +10,11 @@ public class AnyLog {
 		
 	}
 	
-	public static String printLog(ArrayList<String> arr)
+	public String printLog()
 	{
-	    String str = "";    
+	    String str = "Searching History:";    
 	    for(String s : arr){
-	        str += s + " ";
+	        str += s + ", ";
 	    }
 	    return str;
 	}

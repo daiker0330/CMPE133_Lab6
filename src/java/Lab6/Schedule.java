@@ -18,5 +18,7 @@ public class Schedule extends AnyForm{
     
     public String print(){
         std.getEnroll().getCourseList();
-    }
+        
+        
+    } 
 }

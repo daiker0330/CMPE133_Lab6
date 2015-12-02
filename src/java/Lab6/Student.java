@@ -13,14 +13,16 @@ public class Student extends AnyParty {
 	private final int MaxUnits =15;
 	private int StudentUnits;
 	private Enrolling enroll;
-
+ private Schedule schedule;
     public Enrolling getEnroll() {
         return enroll;
     }
-        private Schedule schedule;
+       
+public Schedule getSchedule(){
+    return schedule;
+}
 
 
-	
     public String getUserName(){
         return super.getUserName();
     }
