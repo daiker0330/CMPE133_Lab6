@@ -13,7 +13,11 @@ public class Student extends AnyParty {
 	private final int MaxUnits =15;
 	private int StudentUnits;
 	private Enrolling enroll;
-	
+
+    public Enrolling getEnroll() {
+        return enroll;
+    }
+        private Schedule schedule;
 
 
 	
