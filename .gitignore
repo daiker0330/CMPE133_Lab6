@@ -84,3 +84,4 @@ proguard/
 .idea/
 nbproject/project.properties
 *.properties
+/dist/
