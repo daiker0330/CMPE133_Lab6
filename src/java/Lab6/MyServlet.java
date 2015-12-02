@@ -51,9 +51,39 @@ public class MyServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    IndexWriter w;
+    StandardAnalyzer analyzer;
+    IndexWriterConfig config;
+    Directory index;
+    
+    public void init() throws ServletException {
+        try {
+            //	Specify the analyzer for tokenizing text.
+            //	The same analyzer should be used for indexing and searching
+            analyzer = new StandardAnalyzer();
+            //	Code to create the index
+            index = new RAMDirectory();
+            config = new IndexWriterConfig(analyzer);
+            w = new IndexWriter(index, config);
+            addDoc(w, " Software Engineering 2", "CMPE 133", "Mon.", "Computer Engineering");
+            addDoc(w, " Software Engineering 1", "CMPE 131", "Mon.", "Computer Engineering");
+            addDoc(w, " Object Oriented Design", "CS 151:", "Mon.", "Computer Science");
+            addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.", "Computer Science");
+            addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
+            addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
+            w.close();
+        } catch (Exception e) {
+                System.out.println(e.getMessage());
+        }
+        System.out.println("init");
+        
+    }  
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
@@ -65,6 +95,9 @@ public class MyServlet extends HttpServlet {
             }
             else if(request.getParameter("func").equals("enroll")){
                 gotoEnroll(out, request, response);
+            }
+            else if(request.getParameter("func").equals("addCourse")){
+                gotoAddCourse(out, request, response);
             }
             else{
                 String msg="No Page Found";  
@@ -89,24 +122,6 @@ public class MyServlet extends HttpServlet {
     private void gotoSearch(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
         try
         {
-            //	Specify the analyzer for tokenizing text.
-            //	The same analyzer should be used for indexing and searching
-            StandardAnalyzer analyzer = new StandardAnalyzer();
-
-            //	Code to create the index
-            Directory index = new RAMDirectory();
-
-            IndexWriterConfig config = new IndexWriterConfig(analyzer);
-
-            IndexWriter w = new IndexWriter(index, config);
-            addDoc(w, " Software Engineering 2", "CMPE 133", "Mon.","Computer Engineering");
-            addDoc(w, " Software Engineering 1", "CMPE 131", "Mon.", "Computer Engineering");
-            addDoc(w, " Object Oriented Design", "CS 151:", "Mon.", "Computer Science");
-            addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.", "Computer Science");
-            addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
-            addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
-            w.close();
-
             //	Text to search
             String querystr = request.getParameter("keyword");
 
@@ -131,14 +146,9 @@ public class MyServlet extends HttpServlet {
                 //out.println((i + 1) + ". " +  d.get("Number")+ d.get("Classes") );
                 list.add(course);
             }
-
-            try {
-                request.setAttribute("course", list);
-                RequestDispatcher de = request.getRequestDispatcher("/table.jsp");
-                de.forward(request, response);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            request.setAttribute("course", list);
+            RequestDispatcher de = request.getRequestDispatcher("/table.jsp");
+            de.forward(request, response);
 
             // reader can only be closed when there is no need to access the documents any more
             reader.close();
@@ -161,10 +171,13 @@ public class MyServlet extends HttpServlet {
                 System.out.println(e.getMessage());
             }
         }
-        else if(name.equals("tch") && psd.equals("123")){
-            String msg="You are a teacher";  
-            String title="Teacher";  
-            gotoMsg(out, request, response,title,msg);
+        else if (name.equals("tch") && psd.equals("123")) {
+            try {
+                RequestDispatcher de = request.getRequestDispatcher("/submit.html");
+                de.forward(request, response);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         else{
             String msg="Wrong Name or Password";  
@@ -174,10 +187,10 @@ public class MyServlet extends HttpServlet {
     }
     
     private void gotoMsg(PrintWriter out, HttpServletRequest request, HttpServletResponse response, String title, String msg) {
-        request.setAttribute("msg", msg);
-        request.setAttribute("title", title);
-        RequestDispatcher de = request.getRequestDispatcher("/message.jsp");
         try {
+            request.setAttribute("msg", msg);
+            request.setAttribute("title", title);
+            RequestDispatcher de = request.getRequestDispatcher("/message.jsp");
             de.forward(request, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -189,6 +202,25 @@ public class MyServlet extends HttpServlet {
         //msg+= "\n";
         //msg+=request.getParameter("description");
         String title="Enroll Success";  
+        gotoMsg(out, request, response,title,msg);
+    }
+    
+    private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+        String name = request.getParameter("name");
+        String id = request.getParameter("id");
+        String department = request.getParameter("department");
+        String time = request.getParameter("time");
+        try {
+            IndexWriterConfig newConfig = new IndexWriterConfig(analyzer);
+            w = new IndexWriter(index, newConfig);
+            addDoc(w, name, id, time, department);
+            System.out.println(name);
+            w.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        String msg="Create course success";  
+        String title="Create course success";  
         gotoMsg(out, request, response,title,msg);
     }
     
