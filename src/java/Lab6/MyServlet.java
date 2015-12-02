@@ -79,21 +79,16 @@ public class MyServlet extends HttpServlet {
             addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
             w.close();
             log = new searchHistory();
-            Student std = new Student();
-
-            std.setUserName("std");
-            std.setPassword("123");
-            stds.add(std);
-            Student std2 = new Student();
-            std2.setUserName("std2");
-            std2.setPassword("123");
-            stds.add(std2);
-            //System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPassword());
-            Teacher tch = new Teacher();
-            tch.setUserName("tch");
-            tch.setPassword("123");
-            tchs.add(tch);
-            //System.out.println("size: "+tchs.get(0).getUserName()+"-"+stds.get(0).getPassword());
+            for(int i=1;i<=10;i++){
+                Student std = new Student();
+                std.setUserName("std"+i);
+                std.setPassword("123");
+                stds.add(std);
+                Teacher tch = new Teacher();
+                tch.setUserName("tch"+i);
+                tch.setPassword("123");
+                tchs.add(tch);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -120,7 +115,14 @@ public class MyServlet extends HttpServlet {
                 String msg = log.printHistory();
                 String title = "Log";
                 gotoMsg(out, request, response, title, msg);
-            } else {
+            } else if (request.getParameter("func").equals("clear")) {
+                currentStudent.getEnroll().getArr().clear();
+                currentStudent.getSchedule().getArr().clear();
+                String msg = "Clear Schedule Success";
+                String title = "Clear Schedule";
+                gotoMsg(out, request, response, title, msg);
+            }
+            else {
                 String msg = "No Page Found";
                 String title = "Error";
                 gotoMsg(out, request, response, title, msg);
