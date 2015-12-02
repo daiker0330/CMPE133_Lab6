@@ -57,8 +57,8 @@ public class MyServlet extends HttpServlet {
     IndexWriterConfig config;
     Directory index;
     searchHistory log;
-    ArrayList<Student> stds = new ArrayList<Student>();
-    ArrayList<Teacher> tchs = new ArrayList<Teacher>();
+    ArrayList<Student> stds;
+    ArrayList<Teacher> tchs;
     
     public void init() throws ServletException {
         try {
@@ -78,11 +78,10 @@ public class MyServlet extends HttpServlet {
             w.close();
             log = new searchHistory();
             Student std = new Student();
-            std.init("std", "123");
+            
             stds.add(std);
-            System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPsd());
             Teacher tch = new Teacher();
-            tch.init("tch", "123");
+            
             tchs.add(tch);
         } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -180,30 +179,26 @@ public class MyServlet extends HttpServlet {
         String name = request.getParameter("name");
         String psd = request.getParameter("psd");
 
-        if (stds != null) {
-            for (int i = 0; i < stds.size(); i++) {
-                Student s = stds.get(i);
-                System.out.println("std\n");
-                if (name.equals(s.getUserName()) && psd.equals(s.getPsd())) {
-                    try {
-                        RequestDispatcher de = request.getRequestDispatcher("/search.html");
-                        de.forward(request, response);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+        for(int i=0;i<stds.size();i++){
+            Student s = stds.get(i);
+            if(name.equals(s.getUserName()) && psd.equals(s.getPsd())){
+                try{
+                    RequestDispatcher de=request.getRequestDispatcher("/search.html");  
+                    de.forward(request, response);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
                 }
             }
         }
-        if (tchs != null) {
-            for (int i = 0; i < tchs.size(); i++) {
-                Teacher t = tchs.get(i);
-                if (name.equals(t.getUserName()) && psd.equals(t.getPsd())) {
-                    try {
-                        RequestDispatcher de = request.getRequestDispatcher("/submit.html");
-                        de.forward(request, response);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+        for(int i=0;i<tchs.size();i++){
+            Teacher t = tchs.get(i);
+            if (name.equals(t.getUserName()) && psd.equals(t.getPsd())) {
+                try {
+                    RequestDispatcher de = request.getRequestDispatcher("/submit.html");
+                    de.forward(request, response);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }

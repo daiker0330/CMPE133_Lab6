@@ -15,10 +15,7 @@ public class Student extends AnyParty {
 	private Enrolling enroll;
 	
 
-    public void init(String name, String psd){
-        this.setName(name);
-        this.setPassword(psd);
-    }
+
 	
     public String getUserName(){
         return super.getUserName();
