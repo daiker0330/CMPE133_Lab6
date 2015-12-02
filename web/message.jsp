@@ -27,6 +27,9 @@
     <div class="am-g">
       <div class="am-u-sm-12">
         <h2 class="am-text-center am-text-xxxl am-margin-top-lg"><%=request.getAttribute("msg")%></h2>
+		<h3 class="am-text-center am-text-xl am-margin-top-lg">
+			<input type="button" name="Submit" value="Back" onclick="javascript:history.back(1)" />
+		</h3>
         </pre>
       </div>
     </div>

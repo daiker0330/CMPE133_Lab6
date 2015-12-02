@@ -186,8 +186,8 @@ public class MyServlet extends HttpServlet {
     
     private void gotoEnroll(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
         String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");  
-        msg+= "\n";
-        msg+=request.getParameter("description");
+        //msg+= "\n";
+        //msg+=request.getParameter("description");
         String title="Enroll Success";  
         gotoMsg(out, request, response,title,msg);
     }
