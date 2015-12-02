@@ -13,16 +13,6 @@ public class Student extends AnyParty {
 	private final int MaxUnits =15;
 	private int StudentUnits;
 	private Enrolling enroll;
-	
-<<<<<<< HEAD
-=======
-
-
-	
-    public String getUserName(){
-        return super.getUserName();
-    }
->>>>>>> origin/master
     public  String getPsd(){
         return super.getPassword();
     }

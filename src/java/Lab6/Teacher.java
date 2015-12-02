@@ -11,14 +11,4 @@ package Lab6;
  */
 public class Teacher extends AnyParty {
 
-<<<<<<< HEAD
-=======
-    public String getUserName() {
-        return super.getUserName();
-    }
-
-    public String getPsd() {
-        return super.getPassword();
-    }
->>>>>>> origin/master
 }
