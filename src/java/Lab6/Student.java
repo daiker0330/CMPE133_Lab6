@@ -15,10 +15,12 @@ public class Student extends AnyParty {
 	private Enrolling enroll;
 	
 
-    public Student(int StudentUnits, Enrolling enroll){
- 
-        this.StudentUnits = StudentUnits;
-        this.enroll = enroll;
+    public Student(String userName, String password){
+        super.setUserName(userName);
+        super.setPsd(password);
+        
+        
+        
     }
 	
     public String getUserName(){
