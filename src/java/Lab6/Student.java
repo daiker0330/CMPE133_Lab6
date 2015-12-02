@@ -23,11 +23,24 @@ public Schedule getSchedule(){
 }
 
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+    public Student(String userName, String password){
+        super.setUserName(userName);
+        super.setPsd(password);
+        
+        
+        
+=======
+=======
+>>>>>>> e2318f6da6c01c23b698721edb10c87fe249ae1e
     public Student(int StudentUnits, Enrolling enroll){
  
         this.StudentUnits = StudentUnits;
         this.enroll = enroll;
+>>>>>>> origin/master
     }
 	
     public String getUserName(){
