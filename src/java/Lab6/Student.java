@@ -15,7 +15,11 @@ public class Student extends AnyParty {
 	private Enrolling enroll;
 	
 
-
+    public Student(int StudentUnits, Enrolling enroll){
+ 
+        this.StudentUnits = StudentUnits;
+        this.enroll = enroll;
+    }
 	
     public String getUserName(){
         return super.getUserName();
