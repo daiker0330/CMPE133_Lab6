@@ -24,7 +24,7 @@ public class AnyEntity {
         this.time = time;
         this.department = department;
 
-    }
+    }//123
 
     //Simple get methods to relate to IO class
     public String getname() {
