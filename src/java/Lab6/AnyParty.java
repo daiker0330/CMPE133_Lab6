@@ -17,12 +17,20 @@ public class AnyParty {
     private String units;
     private String password;
 
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String UserName) {
+        this.UserName = UserName;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.UserName = UserName;
+        this.name = name;
     }
 
     public String getId() {
@@ -39,10 +47,6 @@ public class AnyParty {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getUserName() {
-        return UserName;
     }
 
 }

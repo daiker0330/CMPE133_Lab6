@@ -11,16 +11,4 @@ package Lab6;
  */
 public class Teacher extends AnyParty {
 
-        public void init(String name, String psd){
-        this.setName(name);
-        this.setPassword(psd);
-    }
-    
-    public String getUserName() {
-        return super.getUserName();
-    }
-
-    public String getPsd() {
-        return super.getPassword();
-    }
 }

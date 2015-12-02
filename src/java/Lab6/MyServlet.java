@@ -78,12 +78,15 @@ public class MyServlet extends HttpServlet {
             w.close();
             log = new searchHistory();
             Student std = new Student();
-            std.init("std", "123");
+            std.setUserName("std");
+            std.setPassword("123");
             stds.add(std);
-            System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPsd());
+            System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPassword());
             Teacher tch = new Teacher();
-            tch.init("tch", "123");
+            tch.setUserName("tch");
+            tch.setPassword("123");
             tchs.add(tch);
+            System.out.println("size: "+tchs.get(0).getUserName()+"-"+stds.get(0).getPassword());
         } catch (Exception e) {
                 System.out.println(e.getMessage());
         }
@@ -184,7 +187,7 @@ public class MyServlet extends HttpServlet {
             for (int i = 0; i < stds.size(); i++) {
                 Student s = stds.get(i);
                 System.out.println("std\n");
-                if (name.equals(s.getUserName()) && psd.equals(s.getPsd())) {
+                if (name.equals(s.getUserName()) && psd.equals(s.getPassword())) {
                     try {
                         RequestDispatcher de = request.getRequestDispatcher("/search.html");
                         de.forward(request, response);
@@ -197,7 +200,7 @@ public class MyServlet extends HttpServlet {
         if (tchs != null) {
             for (int i = 0; i < tchs.size(); i++) {
                 Teacher t = tchs.get(i);
-                if (name.equals(t.getUserName()) && psd.equals(t.getPsd())) {
+                if (name.equals(t.getUserName()) && psd.equals(t.getPassword())) {
                     try {
                         RequestDispatcher de = request.getRequestDispatcher("/submit.html");
                         de.forward(request, response);
