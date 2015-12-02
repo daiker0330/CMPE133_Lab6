@@ -10,9 +10,8 @@ package Lab6;
  *
  * @author yunfan
  */
-public class Enrolling extends AnyImpact {
-
-    public void addCourse(Course c){
-        this.getArr().add(c);
+public class Department extends AnyType{
+    public Department(String name){
+        this.setName(name);
     }
 }

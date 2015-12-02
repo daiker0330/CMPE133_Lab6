@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Lab6;
 
 import java.util.ArrayList;
@@ -11,16 +12,9 @@ import java.util.ArrayList;
  *
  * @author yunfan
  */
-public class AnyImpact {
-
-    ArrayList<Object> arr = new ArrayList<Object>();
-
-    public ArrayList<Object> getArr() {
-        return arr;
+public class AnyRule {
+    
+    public boolean check(ArrayList<Object> arr){
+        return true;
     }
-
-    public void setArr(ArrayList<Object> arr) {
-        this.arr = arr;
-    }
-
 }

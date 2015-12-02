@@ -7,13 +7,18 @@ package Lab6;
 
 public class Course extends AnyEntity {
 
-    public Course(String name, String id, String time, String Department) {
-        super(name, id, time, Department);
-        // TODO Auto-generated constructor stub
+    private String time;
+    private String department;
+    
+    public Course(String id,String name,String time,String department){
+        this.setId(id);
+        this.setName(name);
+        this.department=department;
+        this.time = time;
     }
 
     public String getName() {
-        return super.getname();
+        return super.getName();
 
     }
 
@@ -22,11 +27,11 @@ public class Course extends AnyEntity {
     }
 
     public String getTime() {
-        return super.getTime();
+        return time;
     }
 
     public String getDep() {
-        return super.getDep();
+        return department;
     }
 
     public String toString() {

@@ -10,9 +10,17 @@ package Lab6;
  *
  * @author yunfan
  */
-public class Enrolling extends AnyImpact {
-
+public class Schedule extends AnyForm{
     public void addCourse(Course c){
         this.getArr().add(c);
+    }
+    
+    public String print(){
+        String msg = new String();
+        for(int i=0;i<this.getArr().size();i++){
+            Course c = (Course)this.getArr().get(i);
+            msg+=c.getId()+"-"+c.getName()+"<br>";
+        }
+        return msg;
     }
 }

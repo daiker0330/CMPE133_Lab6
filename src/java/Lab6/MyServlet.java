@@ -7,6 +7,7 @@
 import Lab6.Student;
 import Lab6.Teacher;
 import Lab6.Course;
+import Lab6.Enrolling;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
@@ -51,7 +52,6 @@ public class MyServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     IndexWriter w;
     StandardAnalyzer analyzer;
     IndexWriterConfig config;
@@ -59,7 +59,9 @@ public class MyServlet extends HttpServlet {
     searchHistory log;
     ArrayList<Student> stds = new ArrayList<Student>();
     ArrayList<Teacher> tchs = new ArrayList<Teacher>();
-    
+    Student currentStudent;
+    List courseList;
+
     public void init() throws ServletException {
         try {
             //	Specify the analyzer for tokenizing text.
@@ -82,71 +84,68 @@ public class MyServlet extends HttpServlet {
             std.setUserName("std");
             std.setPassword("123");
             stds.add(std);
-            System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPassword());
+            Student std2 = new Student();
+            std2.setUserName("std2");
+            std2.setPassword("123");
+            stds.add(std2);
+            //System.out.println("size: "+stds.get(0).getUserName()+"-"+stds.get(0).getPassword());
             Teacher tch = new Teacher();
             tch.setUserName("tch");
             tch.setPassword("123");
             tchs.add(tch);
-            System.out.println("size: "+tchs.get(0).getUserName()+"-"+stds.get(0).getPassword());
+            //System.out.println("size: "+tchs.get(0).getUserName()+"-"+stds.get(0).getPassword());
         } catch (Exception e) {
-                System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         System.out.println("init");
-        
-    }  
-    
+
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-            if(request.getParameter("func").equals("search")){
+
+            if (request.getParameter("func").equals("search")) {
                 gotoSearch(out, request, response);
-            }
-            else if(request.getParameter("func").equals("login")){
+            } else if (request.getParameter("func").equals("login")) {
                 gotoLogin(out, request, response);
-            }
-            else if(request.getParameter("func").equals("enroll")){
+            } else if (request.getParameter("func").equals("enroll")) {
                 gotoEnroll(out, request, response);
-            }
-            else if(request.getParameter("func").equals("addCourse")){
+            } else if (request.getParameter("func").equals("addCourse")) {
                 gotoAddCourse(out, request, response);
-            }
-            else if(request.getParameter("func").equals("log")){
-                String msg=log.printHistory();  
-                String title="Log";  
-                gotoMsg(out, request, response,title,msg);
-            }
-            else{
-                String msg="No Page Found";  
-                String title="Error";  
-                gotoMsg(out, request, response,title,msg);
+            } else if (request.getParameter("func").equals("log")) {
+                String msg = log.printHistory();
+                String title = "Log";
+                gotoMsg(out, request, response, title, msg);
+            } else {
+                String msg = "No Page Found";
+                String title = "Error";
+                gotoMsg(out, request, response, title, msg);
             }
         }
     }
-    
-    private static void addDoc(IndexWriter w, String Class, String number, String time, String department) throws IOException 
-	{
-		  Document doc = new Document();
-		  // A text field will be tokenized
-		  doc.add(new TextField("Classes", Class, Field.Store.YES));
-		  // We use a string field for isbn because we don\'t want it tokenized
-		  doc.add(new StringField("Number", number, Field.Store.YES));
-                  doc.add(new StringField("Time", time, Field.Store.YES));
-                  doc.add(new StringField("Department", department, Field.Store.YES));
-		  w.addDocument(doc);
-	}
 
-    private void gotoSearch(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
-        try
-        {
+    private static void addDoc(IndexWriter w, String Class, String number, String time, String department) throws IOException {
+        Document doc = new Document();
+        // A text field will be tokenized
+        doc.add(new TextField("Classes", Class, Field.Store.YES));
+        // We use a string field for isbn because we don\'t want it tokenized
+        doc.add(new StringField("Number", number, Field.Store.YES));
+        doc.add(new StringField("Time", time, Field.Store.YES));
+        doc.add(new StringField("Department", department, Field.Store.YES));
+        w.addDocument(doc);
+    }
+
+    private void gotoSearch(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+        try {
             //	Text to search
             String querystr = request.getParameter("keyword");
 
             log.addHistory(querystr);
-            
+
             //	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
             Query q = new QueryParser("Classes", analyzer).parse(querystr);
 
@@ -160,27 +159,26 @@ public class MyServlet extends HttpServlet {
 
             //	Code to display the results of search
             //out.println("Found " + hits.length + " Classes Matching your Requirement");
-            List list = new ArrayList();
+            courseList = new ArrayList();
             for (int i = 0; i < hits.length; ++i) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
-                Course course = new Course(d.get("Number"), d.get("Classes"), d.get("Time"),d.get("Department"));
+                Course course = new Course(d.get("Number"), d.get("Classes"), d.get("Time"), d.get("Department"));
                 //out.println((i + 1) + ". " +  d.get("Number")+ d.get("Classes") );
-                list.add(course);
+                courseList.add(course);
             }
-            request.setAttribute("course", list);
+            request.setAttribute("course", courseList);
             RequestDispatcher de = request.getRequestDispatcher("/table.jsp");
             de.forward(request, response);
 
             // reader can only be closed when there is no need to access the documents any more
             reader.close();
-        }
-        catch(Exception e){
-                System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
- 
-    private void gotoLogin(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+
+    private void gotoLogin(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String psd = request.getParameter("psd");
 
@@ -190,6 +188,7 @@ public class MyServlet extends HttpServlet {
                 System.out.println("std\n");
                 if (name.equals(s.getUserName()) && psd.equals(s.getPassword())) {
                     try {
+                        currentStudent = s;
                         RequestDispatcher de = request.getRequestDispatcher("/search.html");
                         de.forward(request, response);
                     } catch (Exception e) {
@@ -211,11 +210,11 @@ public class MyServlet extends HttpServlet {
                 }
             }
         }
-        String msg="Wrong Name or Password";  
-        String title="Error";  
-        gotoMsg(out, request, response,title,msg);
+        String msg = "Wrong Name or Password";
+        String title = "Error";
+        gotoMsg(out, request, response, title, msg);
     }
-    
+
     private void gotoMsg(PrintWriter out, HttpServletRequest request, HttpServletResponse response, String title, String msg) {
         try {
             request.setAttribute("msg", msg);
@@ -226,16 +225,38 @@ public class MyServlet extends HttpServlet {
             System.out.println(e.getMessage());
         }
     }
-    
-    private void gotoEnroll(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
-        String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");  
-        //msg+= "\n";
-        //msg+=request.getParameter("description");
-        String title="Enroll Success";  
-        gotoMsg(out, request, response,title,msg);
+
+    private void gotoEnroll(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+        if (currentStudent != null) {
+            for (int i = 0; i < courseList.size(); i++) {
+                Course c = (Course) courseList.get(i);
+                Enrolling enroll = currentStudent.getEnroll();
+                ArrayList<Object> arr = enroll.getArr();
+                if (c.getName().equals(request.getParameter("name"))) {
+                    if (currentStudent.getRule().check(arr)) {
+                        currentStudent.getEnroll().addCourse(c);
+                        currentStudent.getSchedule().addCourse(c);
+                        String msg = "You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");
+                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
+                        String title = "Enroll Success";
+                        gotoMsg(out, request, response, title, msg);
+                    } else {
+                        String msg = "You cannot enroll in " + request.getParameter("id") + ": "
+                                + request.getParameter("name") + "<br>Since you have already enrolled in 4 courses";
+                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
+                        String title = "Enroll Failed";
+                        gotoMsg(out, request, response, title, msg);
+                    }
+                }
+            }
+        }
+        String msg = "You cannot enroll in " + request.getParameter("id") + ": " + request.getParameter("name");
+        String title = "Enroll Failed";
+        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
+        gotoMsg(out, request, response, title, msg);
     }
-    
-    private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+
+    private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String id = request.getParameter("id");
         String department = request.getParameter("department");
@@ -249,11 +270,11 @@ public class MyServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        String msg="Create course success";  
-        String title="Create course success";  
-        gotoMsg(out, request, response,title,msg);
+        String msg = "Create course success";
+        String title = "Create course success";
+        gotoMsg(out, request, response, title, msg);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

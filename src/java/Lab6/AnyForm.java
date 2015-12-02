@@ -5,10 +5,20 @@
  */
 package Lab6;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yehiaqtaish
  */
 public class AnyForm {
-    
+    ArrayList<Object> arr = new ArrayList<Object>();
+
+    public ArrayList<Object> getArr() {
+        return arr;
+    }
+
+    public void setArr(ArrayList<Object> arr) {
+        this.arr = arr;
+    }
 }

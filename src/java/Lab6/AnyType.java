@@ -10,9 +10,15 @@ package Lab6;
  *
  * @author yunfan
  */
-public class Enrolling extends AnyImpact {
-
-    public void addCourse(Course c){
-        this.getArr().add(c);
+public class AnyType {
+    private String name;
+    
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }
