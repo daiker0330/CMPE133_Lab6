@@ -56,6 +56,7 @@ public class MyServlet extends HttpServlet {
     StandardAnalyzer analyzer;
     IndexWriterConfig config;
     Directory index;
+    searchHistory log;
     
     public void init() throws ServletException {
         try {
@@ -73,6 +74,7 @@ public class MyServlet extends HttpServlet {
             addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
             addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
             w.close();
+            log = new searchHistory();
         } catch (Exception e) {
                 System.out.println(e.getMessage());
         }
@@ -98,6 +100,11 @@ public class MyServlet extends HttpServlet {
             }
             else if(request.getParameter("func").equals("addCourse")){
                 gotoAddCourse(out, request, response);
+            }
+            else if(request.getParameter("func").equals("log")){
+                String msg=log.printHistory();  
+                String title="Log";  
+                gotoMsg(out, request, response,title,msg);
             }
             else{
                 String msg="No Page Found";  
@@ -125,6 +132,8 @@ public class MyServlet extends HttpServlet {
             //	Text to search
             String querystr = request.getParameter("keyword");
 
+            log.addHistory(querystr);
+            
             //	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
             Query q = new QueryParser("Classes", analyzer).parse(querystr);
 

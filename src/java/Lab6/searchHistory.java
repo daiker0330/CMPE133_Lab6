@@ -6,7 +6,7 @@ public class searchHistory extends AnyLog{
 	public void addHistory(String s){
 		super.addElementLog(s);
 	}
-	public String printHistory(ArrayList<String> arr){
-		return super.printLog(arr);
+	public String printHistory(){
+		return super.printLog();
 	}
 }
