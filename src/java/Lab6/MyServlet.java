@@ -73,7 +73,7 @@ public class MyServlet extends HttpServlet {
             w = new IndexWriter(index, config);
             addDoc(w, " Software Engineering 2", "CMPE 133", "Mon.", "Computer Engineering");
             addDoc(w, " Software Engineering 1", "CMPE 131", "Mon.", "Computer Engineering");
-            addDoc(w, " Object Oriented Design", "CS 151:", "Mon.", "Computer Science");
+            addDoc(w, " Object Oriented Design", "CS 151", "Mon.", "Computer Science");
             addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.", "Computer Science");
             addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
             addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
