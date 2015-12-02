@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package Lab6;
 import Lab6.Student;
 import Lab6.Teacher;
 import Lab6.Course;
@@ -65,6 +65,10 @@ public class MyServlet extends HttpServlet {
             }
             else if(request.getParameter("func").equals("enroll")){
                 gotoEnroll(out, request, response);
+            }
+            else if(request.getParameter("func").equals("add"))
+            {
+                gotoAddClass(out, request, response);
             }
             else{
                 String msg="No Page Found";  
@@ -191,7 +195,13 @@ public class MyServlet extends HttpServlet {
         String title="Enroll Success";  
         gotoMsg(out, request, response,title,msg);
     }
-    
+    private void gotoAddClass(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+        String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");  
+        //msg+= "\n";
+        //msg+=request.getParameter("description");
+        String title="Enroll Success";  
+        gotoMsg(out, request, response,title,msg);
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

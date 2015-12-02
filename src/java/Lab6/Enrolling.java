@@ -6,11 +6,22 @@
 
 package Lab6;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yunfan
  */
 public class Enrolling extends AnyImpact {
-
-
+ArrayList<Course> CurrentList = new ArrayList<Course>();
+public void addCourse(Course a){
+    super.addElementLog(a);
+    CurrentList = a;
+    
+    
+    
+}
+public ArrayList getCourseList(Course currentList){
+    return CurrentList;
+}
 }
