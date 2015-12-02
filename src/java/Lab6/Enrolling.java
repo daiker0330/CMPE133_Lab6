@@ -13,15 +13,14 @@ import java.util.ArrayList;
  * @author yunfan
  */
 public class Enrolling extends AnyImpact {
-ArrayList<Course> CurrentList = new ArrayList<Course>();
-public void addCourse(Course a){
+
+    ArrayList<Course> CurrentList = new ArrayList<Course>();
+public void addCourse(ArrayList<Course> a){
     super.addElementLog(a);
-    CurrentList = a;
-    
-    
-    
-}
-public ArrayList getCourseList(Course currentList){
+  
+  CurrentList = a;  
+} 
+ public ArrayList getCourseList(){
     return CurrentList;
 }
 }
