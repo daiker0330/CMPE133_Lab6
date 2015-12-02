@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package Lab6;
 import Lab6.Student;
 import Lab6.Teacher;
 import Lab6.Course;
@@ -98,6 +98,11 @@ public class MyServlet extends HttpServlet {
             else if(request.getParameter("func").equals("enroll")){
                 gotoEnroll(out, request, response);
             }
+<<<<<<< HEAD
+            else if(request.getParameter("func").equals("add"))
+            {
+                gotoAddClass(out, request, response);
+=======
             else if(request.getParameter("func").equals("addCourse")){
                 gotoAddCourse(out, request, response);
             }
@@ -105,6 +110,7 @@ public class MyServlet extends HttpServlet {
                 String msg=log.printHistory();  
                 String title="Log";  
                 gotoMsg(out, request, response,title,msg);
+>>>>>>> 37a490ccb95c8014f452ac3ec4dc4aa33874873c
             }
             else{
                 String msg="No Page Found";  
@@ -213,6 +219,15 @@ public class MyServlet extends HttpServlet {
         String title="Enroll Success";  
         gotoMsg(out, request, response,title,msg);
     }
+<<<<<<< HEAD
+    private void gotoAddClass(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+        String msg="You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");  
+        //msg+= "\n";
+        //msg+=request.getParameter("description");
+        String title="Enroll Success";  
+        gotoMsg(out, request, response,title,msg);
+    }
+=======
     
     private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
         String name = request.getParameter("name");
@@ -233,6 +248,7 @@ public class MyServlet extends HttpServlet {
         gotoMsg(out, request, response,title,msg);
     }
     
+>>>>>>> 37a490ccb95c8014f452ac3ec4dc4aa33874873c
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -7,17 +7,18 @@ package Lab6;
 
 /**
  *
-<<<<<<< HEAD
  * @author kay.pandya
  */
-//Schedule Class but AnyForm
-public class AnyForm  {
-
-	}
-=======
- * @author yehiaqtaish
- */
-public class AnyForm {
+public class Schedule extends AnyForm{
+    private Student std;
     
+    public void setStudent(Student std){
+        this.std = std;
+    }
+    
+    public String print(){
+        std.getEnroll().getCourseList();
+        
+        
+    } 
 }
->>>>>>> 37a490ccb95c8014f452ac3ec4dc4aa33874873c
