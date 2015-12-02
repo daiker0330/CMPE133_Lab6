@@ -22,7 +22,7 @@ public class AnyParty {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.UserName = UserName;
     }
 
     public String getId() {
