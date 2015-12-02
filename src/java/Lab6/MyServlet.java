@@ -57,6 +57,8 @@ public class MyServlet extends HttpServlet {
     IndexWriterConfig config;
     Directory index;
     searchHistory log;
+    ArrayList<Student> stds;
+    ArrayList<Teacher> tchs;
     
     public void init() throws ServletException {
         try {
@@ -75,6 +77,12 @@ public class MyServlet extends HttpServlet {
             addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
             w.close();
             log = new searchHistory();
+            Student std = new Student();
+            
+            stds.add(std);
+            Teacher tch = new Teacher();
+            
+            tchs.add(tch);
         } catch (Exception e) {
                 System.out.println(e.getMessage());
         }
@@ -171,28 +179,32 @@ public class MyServlet extends HttpServlet {
         String name = request.getParameter("name");
         String psd = request.getParameter("psd");
 
-        if(name.equals("std") && psd.equals("123")){
-            try{
-                RequestDispatcher de=request.getRequestDispatcher("/search.html");  
-                de.forward(request, response);
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-        else if (name.equals("tch") && psd.equals("123")) {
-            try {
-                RequestDispatcher de = request.getRequestDispatcher("/submit.html");
-                de.forward(request, response);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        for(int i=0;i<stds.size();i++){
+            Student s = stds.get(i);
+            if(name.equals(s.getUserName()) && psd.equals(s.getPsd())){
+                try{
+                    RequestDispatcher de=request.getRequestDispatcher("/search.html");  
+                    de.forward(request, response);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
         }
-        else{
-            String msg="Wrong Name or Password";  
-            String title="Error";  
-            gotoMsg(out, request, response,title,msg);
+        for(int i=0;i<tchs.size();i++){
+            Teacher t = tchs.get(i);
+            if (name.equals(t.getUserName()) && psd.equals(t.getPsd())) {
+                try {
+                    RequestDispatcher de = request.getRequestDispatcher("/submit.html");
+                    de.forward(request, response);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
+        String msg="Wrong Name or Password";  
+        String title="Error";  
+        gotoMsg(out, request, response,title,msg);
     }
     
     private void gotoMsg(PrintWriter out, HttpServletRequest request, HttpServletResponse response, String title, String msg) {
